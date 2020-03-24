@@ -37,7 +37,7 @@ class PriceField(models.DecimalField):
         super(PriceField, self).contribute_to_class(cls, name, **kwargs)
         setattr(cls, self.name, Creator(self))
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection, context=None):
         return self.to_python(value)
 
     def to_python(self, value):
