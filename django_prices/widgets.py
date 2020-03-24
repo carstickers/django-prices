@@ -20,7 +20,7 @@ class PriceInput(forms.TextInput):
             value = value.net
         return value
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         widget = super(PriceInput, self).render(name, value, attrs=attrs)
         return render_to_string(self.template, {'widget': widget,
                                                 'value': value,
