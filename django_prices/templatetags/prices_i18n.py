@@ -5,14 +5,27 @@ from decimal import Decimal, InvalidOperation
 
 from babel.core import Locale, UnknownLocaleError, get_global
 from babel.numbers import format_currency
+from babel import support as babel_support
 from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, to_locale
 
-from django_babel.templatetags.babel import currencyfmt
+try:
+    from pytz import timezone
+except ImportError:
+    timezone = None
 
 register = template.Library()
+
+
+def _get_format():
+    locale = Locale.parse(to_locale(get_language()))
+    if timezone:
+        tzinfo = timezone(settings.TIME_ZONE)
+    else:
+        tzinfo = None
+    return babel_support.Format(locale, tzinfo)
 
 
 def get_currency_fraction(currency):
@@ -64,6 +77,11 @@ def format_price(value, currency, html=False, normalize=False):
         value, currency, pattern, locale=locale_code,
         currency_digits=(not normalize))
     return mark_safe(result)
+
+
+@register.filter
+def currencyfmt(number, currency):
+    return _get_format().currency(number, currency)
 
 
 @register.simple_tag
