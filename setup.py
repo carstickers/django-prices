@@ -36,7 +36,6 @@ setup(
     install_requires=[
         "Babel>=2.2",
         "Django>=4.0,<6",
-        "enmerkar>=0.7.1",
         "prices>=1.0.0",
     ],
     platforms=["any"],
