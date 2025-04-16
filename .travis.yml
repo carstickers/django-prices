@@ -2,9 +2,10 @@ dist: xenial
 language: python
 sudo: false
 python:
-  - "3.6"
-  - "3.7"
-  - "3.8"
+  - "3.9"
+  - "3.10"
+  - "3.11"
+  - "3.12"
 cache:
   pip: true
 install:
@@ -14,16 +15,18 @@ script:
   - tox
 env:
   matrix:
-    - DJANGO="2.2"
-    - DJANGO="3.0"
+    - DJANGO="4.0"
+    - DJANGO="5.0"
     - DJANGO="master"
 matrix:
   allow_failures:
-    - python: "3.6"
+    - python: "3.9"
       env: DJANGO="master"
-    - python: "3.7"
+    - python: "3.10"
       env: DJANGO="master"
-    - python: "3.8"
+    - python: "3.11"
+      env: DJANGO="master"
+    - python: "3.12"
       env: DJANGO="master"
 after_success:
   - codecov
