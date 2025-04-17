@@ -28,6 +28,7 @@ class NonDatabaseFieldBase:
     many_to_one = None
     one_to_many = None
     one_to_one = None
+    generated = False
 
     def __init__(self):
         self.column = None
